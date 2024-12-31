@@ -24,19 +24,19 @@ int main(int argc, char **argv) {
     ptrs[0] = shared;
     ptrs[1] = shared;
     ptrs[2] = std::move(shared);
-    ASSERT(observer.use_count() == 1, "");
+    ASSERT(observer.use_count() == 2, "");
 
     std::ignore = std::move(ptrs[0]);
     ptrs[1] = std::move(ptrs[1]);
     ptrs[1] = std::move(ptrs[2]);
-    ASSERT(observer.use_count() == 3, "");
+    ASSERT(observer.use_count() == 1, "");
 
     shared = observer.lock();
-    ASSERT(observer.use_count() == 1, "");
+    ASSERT(observer.use_count() == 2, "");
 
     shared = nullptr;
     for (auto &ptr : ptrs) ptr = nullptr;
-    ASSERT(observer.use_count() == 2, "");
+    ASSERT(observer.use_count() == 0, "");
 
     shared = observer.lock();
     ASSERT(observer.use_count() == 0, "");

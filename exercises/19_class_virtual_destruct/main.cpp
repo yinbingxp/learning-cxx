@@ -4,13 +4,14 @@
 // READ: 虚析构函数 <https://zh.cppreference.com/w/cpp/language/destructor>
 
 struct A {
-    // TODO: 正确初始化静态字段
-    static int num_a ;
-
+    // 静态成员变量声明（只能在类内声明）
+    static int num_a;
+    
     A() {
         ++num_a;
     }
-    ~A() {
+    // 添加虚析构函数以支持多态删除
+    virtual ~A() {
         --num_a;
     }
 
@@ -18,22 +19,21 @@ struct A {
         return 'A';
     }
 };
-int A::num_a = 0;
 struct B final : public A {
-    // TODO: 正确初始化静态字段
-    static int num_b ;
+    static int num_b;
 
     B() {
         ++num_b;
     }
-    ~B() {
+    ~B() override {
         --num_b;
     }
 
-    char name() const final {
+    char name() const final override {
         return 'B';
     }
 };
+int A::num_a = 0;
 int B::num_b = 0;
 int main(int argc, char **argv) {
     auto a = new A;
