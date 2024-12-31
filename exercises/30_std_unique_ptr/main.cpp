@@ -51,8 +51,8 @@ int main(int argc, char **argv) {
 
 std::vector<const char *> answers[]{
     {"fd"},             // 第一个表达式
-    {"ffr", "d"},       // 第二个表达式
-    {"r", "d", "r", "d"}  // 第三个表达式
+    {"d","ffr"},       // 第二个表达式
+    {"d","d","r"}  // 第三个表达式
 };
 
     // ---- 不要修改以下代码 ----
