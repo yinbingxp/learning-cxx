@@ -4,22 +4,19 @@ using namespace std;
 // READ: 数组向指针退化 <https://zh.cppreference.com/w/cpp/language/array#%E6%95%B0%E7%BB%84%E5%88%B0%E6%8C%87%E9%92%88%E7%9A%84%E9%80%80%E5%8C%96>
 bool is_fibonacci(int *ptr, int len, int stride) {
     ASSERT(len >= 3, "`len` should be at least 3");
-    // TODO: 编写代码判断从 ptr 开始，每 stride 个元素取 1 个元素，组成长度为 n 的数列是否满足
-    // 提取新的数列
- vector<int> fib_sequence;
-    for (int i = 0; i < len; i += stride) {
-        fib_sequence.push_back(ptr[i]);
-    }
-
-    // 检查新提取的数列是否符合斐波那契数列的特征
-    for (size_t i = 2; i < fib_sequence.size(); ++i) {
-        if (fib_sequence[i] != fib_sequence[i - 1] + fib_sequence[i - 2]) {
-            return false; // 如果不符合，返回 false
+    // 遍历数列，检查每三个连续数是否满足斐波那契性质
+    for (int i = 0; i < len - 2; i++) {
+        int a = ptr[i * stride];         // 第一个数
+        int b = ptr[(i + 1) * stride];   // 第二个数
+        int c = ptr[(i + 2) * stride];   // 第三个数
+        
+        if (c != a + b) {
+            return false;
         }
     }
-    
-    return true; // 如果符合，返回 true
+    return true;
 }
+
 
 
 // ---- 不要修改以下代码 ----
