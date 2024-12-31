@@ -4,8 +4,10 @@
 
 struct Fibonacci {
     int numbers[11];
-    // TODO: 修改方法签名和实现，使测试通过
-    int get(int i) {
+    
+    // 修改方法签名，添加 const 限定符
+    int get(int i) const {
+        return numbers[i];  // 返回第 i 个斐波那契数
     }
 };
 

@@ -42,38 +42,38 @@ int main(int argc, char **argv) {
     C c;
     D d;
 
-    ASSERT(a.virtual_name() == '?', MSG);
-    ASSERT(b.virtual_name() == '?', MSG);
-    ASSERT(c.virtual_name() == '?', MSG);
-    ASSERT(d.virtual_name() == '?', MSG);
-    ASSERT(a.direct_name() == '?', MSG);
-    ASSERT(b.direct_name() == '?', MSG);
-    ASSERT(c.direct_name() == '?', MSG);
-    ASSERT(d.direct_name() == '?', MSG);
+    ASSERT(a.virtual_name() == 'A', MSG);
+    ASSERT(b.virtual_name() == 'B', MSG);
+    ASSERT(c.virtual_name() == 'C', MSG);
+    ASSERT(d.virtual_name() == 'C', MSG); // D 的虚函数为 C 的最终实现
+    ASSERT(a.direct_name() == 'A', MSG);
+    ASSERT(b.direct_name() == 'B', MSG);
+    ASSERT(c.direct_name() == 'C', MSG);
+    ASSERT(d.direct_name() == 'D', MSG);
 
     A &rab = b;
     B &rbc = c;
     C &rcd = d;
 
-    ASSERT(rab.virtual_name() == '?', MSG);
-    ASSERT(rbc.virtual_name() == '?', MSG);
-    ASSERT(rcd.virtual_name() == '?', MSG);
-    ASSERT(rab.direct_name() == '?', MSG);
-    ASSERT(rbc.direct_name() == '?', MSG);
-    ASSERT(rcd.direct_name() == '?', MSG);
+    ASSERT(rab.virtual_name() == 'B', MSG); // rab 的实际类型是 B
+    ASSERT(rbc.virtual_name() == 'C', MSG); // rbc 的实际类型是 C
+    ASSERT(rcd.virtual_name() == 'C', MSG); // rcd 的实际类型是 D，调用 C 的虚函数
+    ASSERT(rab.direct_name() == 'B', MSG); // rab 的实际类型是 B
+    ASSERT(rbc.direct_name() == 'C', MSG); // rbc 的实际类型是 C
+    ASSERT(rcd.direct_name() == 'D', MSG); // rcd 的实际类型是 D
 
     A &rac = c;
     B &rbd = d;
 
-    ASSERT(rac.virtual_name() == '?', MSG);
-    ASSERT(rbd.virtual_name() == '?', MSG);
-    ASSERT(rac.direct_name() == '?', MSG);
-    ASSERT(rbd.direct_name() == '?', MSG);
+    ASSERT(rac.virtual_name() == 'C', MSG); // rac 实际类型是 C
+    ASSERT(rbd.virtual_name() == 'C', MSG); // rbd 实际类型是 D，调用 C 的虚函数
+    ASSERT(rac.direct_name() == 'C', MSG); // rac 实际类型是 C
+    ASSERT(rbd.direct_name() == 'D', MSG); // rbd 实际类型是 D
 
     A &rad = d;
 
-    ASSERT(rad.virtual_name() == '?', MSG);
-    ASSERT(rad.direct_name() == '?', MSG);
+    ASSERT(rad.virtual_name() == 'C', MSG); // rad 实际类型是 D，调用 C 的虚函数
+    ASSERT(rad.direct_name() == 'D', MSG); // rad 实际类型是 D
 
     return 0;
 }

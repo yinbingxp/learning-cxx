@@ -1,21 +1,24 @@
 ﻿#include "../exercise.h"
 #include <cstring>
 
-// READ: 模板非类型实参 <https://zh.cppreference.com/w/cpp/language/template_parameters#%E6%A8%A1%E6%9D%BF%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82>
-
 template<unsigned int N, class T>
 struct Tensor {
     unsigned int shape[N];
     T *data;
 
     Tensor(unsigned int const shape_[N]) {
+        // 保存形状并计算大小
+        std::memcpy(shape, shape_, N * sizeof(unsigned int));
         unsigned int size = 1;
-        // TODO: 填入正确的 shape 并计算 size
+        for (unsigned int i = 0; i < N; ++i) {
+            size *= shape[i];  // 计算总大小
+        }
         data = new T[size];
-        std::memset(data, 0, size * sizeof(T));
+        std::memset(data, 0, size * sizeof(T));  // 将数据初始化为0
     }
+    
     ~Tensor() {
-        delete[] data;
+        delete[] data;  // 释放内存
     }
 
     // 为了保持简单，禁止复制和移动
@@ -23,20 +26,25 @@ struct Tensor {
     Tensor(Tensor &&) noexcept = delete;
 
     T &operator[](unsigned int const indices[N]) {
-        return data[data_index(indices)];
+        return data[data_index(indices)];  // 返回对应的元素
     }
+    
     T const &operator[](unsigned int const indices[N]) const {
-        return data[data_index(indices)];
+        return data[data_index(indices)];  // 返回对应的元素（只读）
     }
 
 private:
     unsigned int data_index(unsigned int const indices[N]) const {
         unsigned int index = 0;
         for (unsigned int i = 0; i < N; ++i) {
-            ASSERT(indices[i] < shape[i], "Invalid index");
-            // TODO: 计算 index
+            ASSERT(indices[i] < shape[i], "Invalid index"); // 检查索引的有效性
+            unsigned int stride = 1;
+            for (unsigned int j = i + 1; j < N; ++j) {
+                stride *= shape[j];  // 计算当前维度的步幅
+            }
+            index += indices[i] * stride;  // 转换为一维索引
         }
-        return index;
+        return index; // 返回计算出来的一维索引
     }
 };
 
