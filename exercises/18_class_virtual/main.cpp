@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     ASSERT(a.virtual_name() == 'A', MSG);
     ASSERT(b.virtual_name() == 'B', MSG);
     ASSERT(c.virtual_name() == 'C', MSG);
-    ASSERT(d.virtual_name() == 'C', MSG); // D 的虚函数为 C 的最终实现
+    ASSERT(d.virtual_name() == 'C', MSG);
     ASSERT(a.direct_name() == 'A', MSG);
     ASSERT(b.direct_name() == 'B', MSG);
     ASSERT(c.direct_name() == 'C', MSG);
@@ -55,25 +55,25 @@ int main(int argc, char **argv) {
     B &rbc = c;
     C &rcd = d;
 
-    ASSERT(rab.virtual_name() == 'B', MSG); // rab 的实际类型是 B
-    ASSERT(rbc.virtual_name() == 'C', MSG); // rbc 的实际类型是 C
-    ASSERT(rcd.virtual_name() == 'C', MSG); // rcd 的实际类型是 D，调用 C 的虚函数
-    ASSERT(rab.direct_name() == 'B', MSG); // rab 的实际类型是 B
-    ASSERT(rbc.direct_name() == 'C', MSG); // rbc 的实际类型是 C
-    ASSERT(rcd.direct_name() == 'D', MSG); // rcd 的实际类型是 D
+    ASSERT(rab.virtual_name() == 'B', MSG);
+    ASSERT(rbc.virtual_name() == 'C', MSG);
+    ASSERT(rcd.virtual_name() == 'C', MSG);
+    ASSERT(rab.direct_name() == 'B', MSG);
+    ASSERT(rbc.direct_name() == 'C', MSG);
+    ASSERT(rcd.direct_name() == 'D', MSG);
 
     A &rac = c;
     B &rbd = d;
 
-    ASSERT(rac.virtual_name() == 'C', MSG); // rac 实际类型是 C
-    ASSERT(rbd.virtual_name() == 'C', MSG); // rbd 实际类型是 D，调用 C 的虚函数
-    ASSERT(rac.direct_name() == 'C', MSG); // rac 实际类型是 C
-    ASSERT(rbd.direct_name() == 'D', MSG); // rbd 实际类型是 D
+    ASSERT(rac.virtual_name() == 'C', MSG);
+    ASSERT(rbd.virtual_name() == 'C', MSG);
+    ASSERT(rac.direct_name() == 'C', MSG);
+    ASSERT(rbd.direct_name() == 'D', MSG);
 
     A &rad = d;
 
-    ASSERT(rad.virtual_name() == 'C', MSG); // rad 实际类型是 D，调用 C 的虚函数
-    ASSERT(rad.direct_name() == 'D', MSG); // rad 实际类型是 D
+    ASSERT(rad.virtual_name() == 'C', MSG);
+    ASSERT(rad.direct_name() == 'D', MSG);
 
     return 0;
 }
