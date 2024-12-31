@@ -1,6 +1,5 @@
 #include "../exercise.h"
-
-// READ: 类模板 <https://zh.cppreference.com/w/cpp/language/class_template>
+#include <cstring> // 添加此行
 
 template<class T>
 struct Tensor4D {
@@ -12,7 +11,7 @@ struct Tensor4D {
         unsigned int size = 1;
         // 复制shape并计算总大小
         for (int i = 0; i < 4; i++) {
-            shape[i] = shape_[i];  // 修正：之前错误地使用了shape_[4]
+            shape[i] = shape_[i];
             size *= shape[i];
         }
         data = new T[size];
@@ -20,10 +19,7 @@ struct Tensor4D {
     }
 
     Tensor4D &operator+=(Tensor4D const &others) {
-        // 计算当前tensor的总大小
-        unsigned int size = shape[0] * shape[1] * shape[2] * shape[3];
-        
-        // 处理广播加法
+        // 只使用shape计算总大小
         for (unsigned int i = 0; i < shape[0]; i++) {
             unsigned int i_other = others.shape[0] == 1 ? 0 : i;
             for (unsigned int j = 0; j < shape[1]; j++) {
@@ -36,7 +32,7 @@ struct Tensor4D {
                         // 计算当前位置的索引
                         unsigned int idx = ((i * shape[1] + j) * shape[2] + k) * shape[3] + l;
                         // 计算other tensor中对应位置的索引
-                        unsigned int other_idx = ((i_other * others.shape[1] + j_other) * 
+                        unsigned int other_idx = ((i_other * others.shape[1] + j_other) *
                                                  others.shape[2] + k_other) * others.shape[3] + l_other;
                         
                         data[idx] += others.data[other_idx];
@@ -55,6 +51,7 @@ struct Tensor4D {
     // Tensor4D(Tensor4D const &) = delete;
     // Tensor4D(Tensor4D &&) noexcept = delete;
 };
+
 // ---- 不要修改以下代码 ----
 int main(int argc, char **argv) {
     {
