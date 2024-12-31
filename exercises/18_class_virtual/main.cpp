@@ -58,22 +58,22 @@ int main(int argc, char **argv) {
     ASSERT(rab.virtual_name() == 'B', MSG);
     ASSERT(rbc.virtual_name() == 'C', MSG);
     ASSERT(rcd.virtual_name() == 'C', MSG);
-    ASSERT(rab.direct_name() == 'B', MSG);
-    ASSERT(rbc.direct_name() == 'C', MSG);
-    ASSERT(rcd.direct_name() == 'D', MSG);
+    ASSERT(rab.direct_name() == 'A', MSG);
+    ASSERT(rbc.direct_name() == 'B', MSG);
+    ASSERT(rcd.direct_name() == 'C', MSG);
 
     A &rac = c;
     B &rbd = d;
 
     ASSERT(rac.virtual_name() == 'C', MSG);
     ASSERT(rbd.virtual_name() == 'C', MSG);
-    ASSERT(rac.direct_name() == 'C', MSG);
-    ASSERT(rbd.direct_name() == 'D', MSG);
+    ASSERT(rac.direct_name() == 'A', MSG);
+    ASSERT(rbd.direct_name() == 'B', MSG);
 
     A &rad = d;
 
     ASSERT(rad.virtual_name() == 'C', MSG);
-    ASSERT(rad.direct_name() == 'D', MSG);
+    ASSERT(rad.direct_name() == 'A', MSG);
 
     return 0;
 }

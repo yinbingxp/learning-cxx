@@ -5,15 +5,20 @@ using namespace std;
 bool is_fibonacci(int *ptr, int len, int stride) {
     ASSERT(len >= 3, "`len` should be at least 3");
     // TODO: 编写代码判断从 ptr 开始，每 stride 个元素取 1 个元素，组成长度为 n 的数列是否满足
-    // arr[i + 2] = arr[i] + arr[i + 1]
-    int *end = ptr + len; // 设置数组末尾的指针
-    for (int *i = ptr; i + 2 * stride < end; i += stride) {
-        // 检查斐波那契条件
-        if (*i + *(i + stride) != *(i + 2 * stride)) {
-            return false; // 一旦不符合条件，返回 false
+    // 提取新的数列
+ vector<int> fib_sequence;
+    for (int i = 0; i < len; i += stride) {
+        fib_sequence.push_back(ptr[i]);
+    }
+
+    // 检查新提取的数列是否符合斐波那契数列的特征
+    for (size_t i = 2; i < fib_sequence.size(); ++i) {
+        if (fib_sequence[i] != fib_sequence[i - 1] + fib_sequence[i - 2]) {
+            return false; // 如果不符合，返回 false
         }
     }
-    return true; // 所有条件都满足，返回 true
+    
+    return true; // 如果符合，返回 true
 }
 
 
