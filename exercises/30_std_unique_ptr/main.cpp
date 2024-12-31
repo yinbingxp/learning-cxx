@@ -49,10 +49,10 @@ int main(int argc, char **argv) {
 
     // ---- 不要修改以上代码 ----
 
- std::vector<const char *> answers[]{
+std::vector<const char *> answers[]{
     {"fd"},
-    {"r", "ffd", "d"},  // 修改这一行
-    {"rrd", "r", "d"},
+    {"ff", "r", "d"},  // 第二个表达式的结果
+    {"r", "d", "r", "d"}  // 第三个表达式的结果
 };
 
     // ---- 不要修改以下代码 ----
