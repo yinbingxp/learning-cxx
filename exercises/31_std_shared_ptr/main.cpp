@@ -24,15 +24,15 @@ int main(int argc, char **argv) {
     ptrs[0] = shared;                               // 计数: 2
     ptrs[1] = shared;                               // 计数: 3
     ptrs[2] = std::move(shared);                    // 计数: 2 (shared变为nullptr)
-    ASSERT(observer.use_count() == 2, "");          // 移动后shared为空，只剩数组中的引用
+    ASSERT(observer.use_count() == 3, "");          // 移动后shared为空，只剩数组中的引用
 
     std::ignore = std::move(ptrs[0]);               // 计数不变
     ptrs[1] = std::move(ptrs[1]);                  // 计数不变
     ptrs[1] = std::move(ptrs[2]);                  // ptrs[2]变空，计数: 1
-    ASSERT(observer.use_count() == 1, "");          // 只剩ptrs[1]持有引用
+    ASSERT(observer.use_count() == 2, "");          // 只剩ptrs[1]持有引用
 
     shared = observer.lock();                       // 计数: 2
-    ASSERT(observer.use_count() == 2, "");          // lock()创建新的shared_ptr
+    ASSERT(observer.use_count() == 3, "");          // lock()创建新的shared_ptr
 
     shared = nullptr;                               // 计数: 1
     for (auto &ptr : ptrs) ptr = nullptr;          // 计数: 0
